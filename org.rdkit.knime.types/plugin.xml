@@ -159,6 +159,10 @@
                PythonClassName="RDKitMolAdapterValueFactory"
                ValueFactory="org.rdkit.knime.types.RDKitAdapterCellValueFactory">
          </PythonValueFactory>
+         <PythonValueFactory
+               PythonClassName="RDKitReactionValueFactory"
+               ValueFactory="org.rdkit.knime.types.RDKitReactionCellValueFactory">
+         </PythonValueFactory>
       </Module>
    </extension>   
    </plugin>

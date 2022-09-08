@@ -60,6 +60,7 @@ try:
     # All Python environments used in KNIME would then have to provide rdkit,
     # which we don't want.
     from rdkit import Chem
+    from rdkit.Chem.rdChemReactions import ChemicalReaction
 
 except ImportError as e:
     LOGGER.info(
@@ -71,6 +72,9 @@ except ImportError as e:
     class Chem:
         class Mol:
             pass
+
+    class ChemicalReaction:
+        pass
 
 
 class RDKitMolAdapterValueFactory(kt.PythonValueFactory):
@@ -101,6 +105,21 @@ class RDKitMolValueFactory(kt.PythonValueFactory):
         if storage is None:
             return None
         return Chem.Mol(storage)
+
+    def encode(self, value):
+        if value is None:
+            return None
+        return value.ToBinary()
+
+
+class RDKitReactionValueFactory(kt.PythonValueFactory):
+    def __init__(self):
+        kt.PythonValueFactory.__init__(self, ChemicalReaction)
+
+    def decode(self, storage):
+        if storage is None:
+            return None
+        return ChemicalReaction(storage)
 
     def encode(self, value):
         if value is None:
