@@ -33,6 +33,11 @@
                 cellClass="org.rdkit.knime.types.RDKitReactionCell"
                 serializerClass="org.rdkit.knime.types.RDKitReactionCell$RDKitReactionSerializer">
           </serializer>
+          <ValueFactory
+                deprecated="false"
+                cellClass="org.rdkit.knime.types.RDKitReactionCell"
+                valueFactoryClass="org.rdkit.knime.types.RDKitReactionCellValueFactory">
+          </ValueFactory>
    	   </DataType>
    </extension>
    
@@ -163,6 +168,26 @@
                PythonClassName="RDKitReactionValueFactory"
                ValueFactory="org.rdkit.knime.types.RDKitReactionCellValueFactory">
          </PythonValueFactory>
+         <PythonProxyType
+               PythonClassName="RDKitFingerprintValueFactory"
+               ValueFactory="org.knime.core.data.v2.value.DenseBitVectorValueFactory">
+         </PythonProxyType>
+         <PythonProxyType
+               PythonClassName="RDKitCountFingerprintValueFactoryUInt"
+               ValueFactory="org.knime.core.data.v2.value.DenseByteVectorValueFactory">
+         </PythonProxyType>
+         <PythonProxyType
+               PythonClassName="RDKitCountFingerprintValueFactoryInt"
+               ValueFactory="org.knime.core.data.v2.value.DenseByteVectorValueFactory">
+         </PythonProxyType>
+         <PythonProxyType
+               PythonClassName="RDKitCountFingerprintValueFactoryULong"
+               ValueFactory="org.knime.core.data.v2.value.DenseByteVectorValueFactory">
+         </PythonProxyType>
+         <PythonProxyType
+               PythonClassName="RDKitCountFingerprintValueFactoryLong"
+               ValueFactory="org.knime.core.data.v2.value.DenseByteVectorValueFactory">
+         </PythonProxyType>
       </Module>
    </extension>   
    </plugin>

@@ -61,6 +61,13 @@ try:
     # which we don't want.
     from rdkit import Chem
     from rdkit.Chem.rdChemReactions import ChemicalReaction
+    from rdkit.DataStructs.cDataStructs import (
+        ExplicitBitVect,
+        UIntSparseIntVect,
+        IntSparseIntVect,
+        ULongSparseIntVect,
+        LongSparseIntVect,
+    )
 
 except ImportError as e:
     LOGGER.info(
@@ -74,6 +81,21 @@ except ImportError as e:
             pass
 
     class ChemicalReaction:
+        pass
+
+    class ExplicitBitVect:
+        pass
+
+    class UIntSparseIntVect:
+        pass
+
+    class IntSparseIntVect:
+        pass
+
+    class LongSparseIntVect:
+        pass
+
+    class ULongSparseIntVect:
         pass
 
 
@@ -125,3 +147,71 @@ class RDKitReactionValueFactory(kt.PythonValueFactory):
         if value is None:
             return None
         return value.ToBinary()
+
+
+class RDKitFingerprintValueFactory(kt.PythonValueFactory):
+    def __init__(self):
+        kt.PythonValueFactory.__init__(self, ExplicitBitVect)
+
+    def decode(self, storage):
+        if storage is None:
+            return None
+        import rdkit
+
+        length = int.from_bytes(storage[:8], byteorder="little")
+        fp = rdkit.DataStructs.CreateFromBinaryText(storage[8:])
+        return fp
+
+    def encode(self, value):
+        if value is None:
+            return None
+        import rdkit
+
+        length_bytes = len(value).to_bytes(length=8, byteorder="little")
+        return length_bytes + rdkit.DataStructs.BitVectToBinaryText(value)
+
+
+class AbstractRDKitCountFingerprintValueFactory(kt.PythonValueFactory):
+    def __init__(self, dtype):
+        self._dtype = dtype
+        kt.PythonValueFactory.__init__(self, dtype)
+
+    def decode(self, storage):
+        if storage is None:
+            return None
+
+        # construct a new count fingerprint of type _dtype and fill it
+        sparse_vec = self._dtype(len(storage))
+        for i, v in enumerate(storage):
+            if v:
+                sparse_vec[i] = v
+        return sparse_vec
+
+    def encode(self, value):
+        if value is None:
+            return None
+
+        ba = bytearray(value.GetLength())
+        for idx, v in value.GetNonzeroElements().items():
+            ba[idx] = v
+        return ba
+
+
+class RDKitCountFingerprintValueFactoryUInt(AbstractRDKitCountFingerprintValueFactory):
+    def __init__(self):
+        super().__init__(UIntSparseIntVect)
+
+
+class RDKitCountFingerprintValueFactoryInt(AbstractRDKitCountFingerprintValueFactory):
+    def __init__(self):
+        super().__init__(IntSparseIntVect)
+
+
+class RDKitCountFingerprintValueFactoryULong(AbstractRDKitCountFingerprintValueFactory):
+    def __init__(self):
+        super().__init__(ULongSparseIntVect)
+
+
+class RDKitCountFingerprintValueFactoryLong(AbstractRDKitCountFingerprintValueFactory):
+    def __init__(self):
+        super().__init__(LongSparseIntVect)
