@@ -25,7 +25,7 @@
 					<environments>
 						<environment>
 							<os>macosx</os>
-							<arch>x86_64</arch>
+							<!-- <arch>x86_64</arch> We remove the architecture specifier as long as there is no dedicated arm64 build for Mac yet -->
 						</environment>
 					</environments>
 				</configuration>

@@ -707,11 +707,12 @@ Public License instead of this License.  But first, please read
    <plugin
          id="org.rdkit.knime.bin.macosx.x86_64"
          os="macosx"
-         arch="x86_64"
          download-size="0"
          install-size="0"
          version="0.0.0"
          fragment="true"/>
+
+   <!-- TODO: add the aarch64 build for Mac once that is available, then re-add the arch="" filter for the x86_64 build -->
 
    <plugin
          id="org.rdkit.knime.bin.win32.x86_64"
