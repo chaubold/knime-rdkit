@@ -268,12 +268,12 @@ public class RDKitInteractiveView<T extends NodeModel> extends NodeView<T> {
 
 	}
 
-	/** {@inheritDoc} Removes all new lines and replaces them by a comma. */
-	@Override
-	public void warningChanged(final String warning) {
-		final String warningWithoutNewLines = (warning == null ? null : warning.replace("\n", ", "));
-		super.warningChanged(warningWithoutNewLines);
-	}
+//	/** {@inheritDoc} Removes all new lines and replaces them by a comma. */
+//	@Override
+//	public void warningChanged(final String warning) {
+//		final String warningWithoutNewLines = (warning == null ? null : warning.replace("\n", ", "));
+//		super.warningChanged(warningWithoutNewLines);
+//	}
 
 	/**
 	 * Checks if there is data to display. That is: The model's content model
