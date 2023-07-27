@@ -695,14 +695,17 @@ Public License instead of this License.  But first, please read
          install-size="0"
          version="0.0.0"/>
 
-   <plugin
+   <!-- 
+      Disable the linux fragment for 5.1.0 because it crashes KNIME in combination with the deployed CEF version.
+
+      <plugin
          id="org.rdkit.knime.bin.linux.x86_64"
          os="linux"
          arch="x86_64"
          download-size="0"
          install-size="0"
          version="0.0.0"
-         fragment="true"/>
+         fragment="true"/> -->
 
    <plugin
          id="org.rdkit.knime.bin.macosx.x86_64"
